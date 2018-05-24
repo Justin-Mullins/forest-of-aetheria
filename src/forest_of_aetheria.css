@@ -12,11 +12,12 @@ body {
 p {
   font-family: fanwood;
   font-size: 20px;
-  margin-left: 15px;
+  margin-left: 25px;
+  margin-right: 25px;
 }
 
 input {
-  margin-left: 15px;
+  margin-top: 30px;
 }
 
 #stage {
@@ -34,6 +35,20 @@ input {
   margin-top: 30px;
 }
 
+#menuBar {
+  width: 640px;
+  height: 85px;
+}
+
 #compass {
-  margin-top: 15px;
+  margin-top: 19px;
+}
+
+#mapImage {
+  margin-top: 10px;
+}
+
+.bar {
+  float: left;
+  margin-left: 50px;
 }

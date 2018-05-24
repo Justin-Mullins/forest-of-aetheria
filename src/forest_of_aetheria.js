@@ -73,7 +73,7 @@ var gameMessage = "";
 
 // Create an array of actions the game understands
 // and a variable to store the current action
-var actionsIKnow = ["north", "west", "south", "east", "talk", "speak", "say", "use", "take", "pick up", "grab" , "drop"];
+var actionsIKnow = ["north", "west", "south", "east", "talk", "speak", "say", "use", "take", "pick up", "grab", "drop"];
 var action = "";
 
 // Create an array of items the game understands
@@ -85,6 +85,7 @@ var item = "";
 var output = document.querySelector("#output");
 var input = document.querySelector("#input");
 var image = document.querySelector("#image");
+var mapImage = document.querySelector("#mapImage");
 
 // The button
 var button = document.querySelector("button");
@@ -204,6 +205,9 @@ function render() {
   // Render the location
   output.innerHTML = map[mapLoctaion];
   image.src = "../images/" + images[mapLoctaion];
+
+  // Render the map
+  mapImage.src = "../images/map1/map" + mapLoctaion + ".png";
 
   // Display an item if there is one in this locations
   // Loop through all game elements
