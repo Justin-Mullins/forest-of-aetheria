@@ -2,23 +2,24 @@
 var map = [];
 map[0] = "A woman sits on the forest floor. She has an otherworldly look about her.";
 map[1] = "You approach the edge of a pool of water.";
-map[2] = "You see a small secluded cabin. You hear the faint sound of music coming from within.";
+map[2] = "You see a small secluded cabin. You hear the faint sound of music coming from within. Upon closer inspection, the door is locked. And there is a sign on the door saying 'Visitors Not Welcome!' You figure it's probably best not to knock.";
 map[3] = "A translucent image appears before you.";
 map[4] = "Tall trees line your path as you head deeper into the forest.";
 map[5] = "You can see a forest brook and hear the sound of steadily churning water.";
 map[6] = "You see a narrow gravel path going through the forest.";
-map[7] = "Darkness hangs heavily over this part of the forest. You hear the sound of muffled screams all around you.";
+// Darkness hangs heavily over this part of the forest. You hear the sound of muffled screams all around you.
+map[7] = "A dark narrow tunnle lies in front of you. You hear hushed whispers coming from the other side of the tunnle.";
 map[8] = "Sunshine breaks through the line of trees in front of you.";
 map[9] = "Lush foliage covers the ground surrounding the path winding it's way though the forest.";
 map[10] = "You see a paved road leading through the forest.";
-map[11] = "A dark narrow tunnle lies in front of you. You hear hushed whispers coming from the other side of the tunnle.";
+map[11] = "Trees surround you and lush vegitation covers the ground around.";
 map[12] = "In a small clearing, you see a well.";
 map[13] = "A pond lies before you.";
 map[14] = "You are in the middle of the forest. Trees surround you on all sides.";
 map[15] = "You are in wooded area, dense with trees.";
 
 // Set player's starting location on the Map;
-var mapLoctaion = 6;
+var mapLoctaion = 14;
 
 // Initialize array with images for the location backgrounds
 var images = [];
@@ -44,15 +45,15 @@ var blockedPathMessages = [];
 blockedPathMessages[0] = "The woman shouts, 'You must not go that way! It isn't safe!'. She gives you a apprehensive look and shakes her head slowly.";
 blockedPathMessages[1] = "You are unable to find a way to cross the water.";
 blockedPathMessages[2] = "There is a tall cliff overlooking a rocky valley below. You cannot go this way.";
-blockedPathMessages[3] = "Fear has taken ahold of you. You cannot move.";
+blockedPathMessages[3] = "You cannot go this way.";
 blockedPathMessages[4] = "The trees are too thick to pass this way.";
 blockedPathMessages[5] = "";
 blockedPathMessages[6] = "A tangle of thick thorns block your way.";
-blockedPathMessages[7] = "The sound of muffled screams can be heard in that direction. You are too afraid to go that way. You pee a little.";
+blockedPathMessages[7] = "There is a mysterious force blocking your way.";
 blockedPathMessages[8] = "The trees are too thick to pass this way.";
 blockedPathMessages[9] = "";
 blockedPathMessages[10] = "A tangle of thick thorns block your way.";
-blockedPathMessages[11] = "There is a mysterious force blocking your way.";
+blockedPathMessages[11] = "";
 blockedPathMessages[12] = "Beyond the well, lies a body of water. You are unable to cross.";
 blockedPathMessages[13] = "You are unable to find a way to cross the water.";
 blockedPathMessages[14] = "There is a large body of water this way that you cannot cross.";
@@ -141,7 +142,7 @@ function playGame() {
       if (mapLoctaion === 0 || mapLoctaion === 1 || mapLoctaion === 2) {
         mapLoctaion += 12;
       } // Block off the passage to at map 11. Until the blockedPathMessages is cleared.
-      else if (mapLoctaion === 11 && blockedPathMessages[mapLoctaion] !== "") {
+      else if (mapLoctaion === 3 || (mapLoctaion === 7 && blockedPathMessages[mapLoctaion] !== "")) {
         gameMessage = blockedPathMessages[mapLoctaion];
       }
       else {
@@ -149,11 +150,14 @@ function playGame() {
       }
       break;
     case "east":
-      if (mapLoctaion === 2 || mapLoctaion === 6) {
+      if (mapLoctaion === 2) {
         mapLoctaion -= 2;
       }
-      else if (mapLoctaion === 11 || mapLoctaion === 15) {
+      else if (mapLoctaion === 7 || mapLoctaion === 11 || mapLoctaion === 15) {
         mapLoctaion -= 3;
+      }
+      else if (mapLoctaion === 3 && blockedPathMessages[mapLoctaion] !== "") {
+        gameMessage = blockedPathMessages[mapLoctaion];
       }
       else {
         mapLoctaion += 1;
@@ -171,10 +175,10 @@ function playGame() {
       }
       break;
     case "west":
-      if (mapLoctaion === 0 || mapLoctaion === 4) {
+      if (mapLoctaion === 0) {
         mapLoctaion += 2;
       }
-      else if (mapLoctaion === 8 || mapLoctaion === 12) {
+      else if (mapLoctaion === 8 || mapLoctaion === 12 || mapLoctaion === 4) {
         mapLoctaion += 3;
       }
       else {
@@ -251,8 +255,6 @@ function dropItem() {
   if (backpack.length !== 0) {
     // find the index number of the item in the items array
     var backpackIndexNumber = backpack.indexOf(item);
-    console.log("passed first if.");
-    console.log(backpackIndexNumber);
 
     // Does the item exist in the player's backpack?
     if (backpackIndexNumber !== -1) {
@@ -293,7 +295,7 @@ function useItem() {
     switch (backpack[backpackIndexNumber]) {
       case "stone":
         if (mapLoctaion === 12) {
-          gameMessage = "You drop the stone into the well. You hear a distant 'Clack!', as you hear it hit the bottom. Moments later, from deep within the well, you see a glowing object floating up from below. As it gets nearer you can make out that it's a flute.";
+          gameMessage = "<br>You drop the stone into the well. You hear a distant 'Clack!', as you hear it hit the bottom. Moments later, from deep within the well, you see a glowing object floating up from below. As it gets nearer you can make out that it's a flute.";
           // Remove stone from backpack.
           backpack.splice(backpackIndexNumber, 1);
           // Push flute into the world.
@@ -306,7 +308,7 @@ function useItem() {
         break;
       case "flute":
         if (mapLoctaion === 2) {
-          gameMessage = "You don't know how to play a flute, so the sounds you make are not pleasant. A few moments later, the music inside the cabin fade away. The door burst open and a grizzled old man stomps over to you looking very annoyed."
+          gameMessage = "<br>You don't know how to play a flute, so the sounds you make are unpleasant. A few moments later, the music inside the cabin fade away. The door burst open and a grizzled old man stomps over to you looking very annoyed."
           gameMessage += "' That was the most awful noise I've ever heard. I'll trade you this pendant for your flute just so I don't have to listen to that garbage anymore.'";
           gameMessage += " He yanks the flute from your hands and throws something on the ground. Then he stomps back toward his cabin and goes back inside.";
           // Remove flute from backpack.
@@ -320,8 +322,8 @@ function useItem() {
         }
         break;
       case "pendant":
-        if (mapLoctaion === 11) {
-          gameMessage = "You hold the pendant out, waiting for something to happen. Moments later, the pendant starts to float out of your grasp. You feel the";
+        if (mapLoctaion === 7) {
+          gameMessage = "<br>You hold the pendant out, waiting for something to happen. Moments later, the pendant starts to float out of your grasp. You feel the";
           gameMessage += " ground start to shake a little. And swirls of white light spin in an intricate pattern in front of the tunnle entrance."
           gameMessage += " You hear a loud 'Thonk!' and then everything goes back to normal. You reach out and can feel the force holding the entrance closed is now gone.";
           // Remove pendant from the backpack.
