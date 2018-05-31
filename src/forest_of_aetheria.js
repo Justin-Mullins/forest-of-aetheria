@@ -19,7 +19,7 @@ map[14] = "You are in the middle of the forest. Trees surround you on all sides.
 map[15] = "You are in wooded area, dense with trees.";
 
 // Set player's starting location on the Map;
-var mapLoctaion = 14;
+var mapLoctaion = 15;
 
 // Initialize array with images for the location backgrounds
 var images = [];
@@ -58,6 +58,9 @@ blockedPathMessages[12] = "Beyond the well, lies a body of water. You are unable
 blockedPathMessages[13] = "You are unable to find a way to cross the water.";
 blockedPathMessages[14] = "There is a large body of water this way that you cannot cross.";
 blockedPathMessages[15] = "There is a large body of water this way that you cannot cross.";
+
+// Initialize sounds and music
+var stoneSound = new Audio('../sounds/stone_impact.wav');
 
 // Initialize array of items, and item locations
 var items = ["stone"];
@@ -213,6 +216,9 @@ function render() {
   // Render the map
   mapImage.src = "../images/map1/map" + mapLoctaion + ".png";
 
+  // Display game message
+  output.innerHTML += "<br><em>" + gameMessage + "</em>";
+
   // Display an item if there is one in this locations
   // Loop through all game elements
   for (var i = 0; i < items.length; i++) {
@@ -222,8 +228,6 @@ function render() {
       output.innerHTML += "<br>You see a <strong>" + items[i] + "</strong> here.";
     }
   }
-  // Display game message
-  output.innerHTML += "<br><em>" + gameMessage + "</em>";
 
   // Display the player's backpack contents
   if (backpack.length !== 0) {
@@ -295,6 +299,7 @@ function useItem() {
     switch (backpack[backpackIndexNumber]) {
       case "stone":
         if (mapLoctaion === 12) {
+          stoneSound.play();
           gameMessage = "<br>You drop the stone into the well. You hear a distant 'Clack!', as you hear it hit the bottom. Moments later, from deep within the well, you see a glowing object floating up from below. As it gets nearer you can make out that it's a flute.";
           // Remove stone from backpack.
           backpack.splice(backpackIndexNumber, 1);
@@ -376,4 +381,6 @@ function endGame() {
   gameMessage = "<br>You have vanquished darkness, and have won the game!";
   // Change to the title screen.
   image.src = "../images/" + "title_screen.png";
+
+  // Add some credits here
 }
